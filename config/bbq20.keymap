@@ -15,6 +15,8 @@
 #define SYM 1
 #define UPPER 2
 
+&sl { release-after-ms = <10000>; };
+
 / {
     behaviors {
         td0: tap_dance_0 {
