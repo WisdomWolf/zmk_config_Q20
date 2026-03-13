@@ -2,4 +2,47 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@abb64ba316c29caddc49727ca2cac2f0ed5970c7
+    runs-on: ubuntu-latest
+    container:
+      image: zmkfirmware/zmk-build-arm:3.5
+    name: Build BBQ20 Firmware
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache west modules
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-zephyr-modules
+        with:
+          path: |
+            modules/
+            tools/
+            zephyr/
+            bootloader/
+            zmk/
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('config/west.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: West Init
+        run: west init -l config
+
+      - name: West Update
+        run: west update
+
+      - name: West Zephyr Export
+        run: west zephyr-export
+
+      - name: Build BBQ20 Firmware
+        run: |
+          west build -s zmk/app -b bbq20 -- \
+            -DZMK_CONFIG=${{ github.workspace }}/config
+
+      - name: Archive Firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: bbq20-zmk
+          path: build/zephyr/zmk.uf2
