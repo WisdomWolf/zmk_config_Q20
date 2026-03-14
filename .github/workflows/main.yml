@@ -65,6 +65,7 @@ jobs:
           find zmk -name "bbq20*" 2>/dev/null
 
       - name: Build BBQ20 Firmware
+        working-directory: ${{ github.workspace }}
         run: |
           west build -s zmk/app -b bbq20 -- \
             -DZMK_CONFIG="${{ github.workspace }}/config"
