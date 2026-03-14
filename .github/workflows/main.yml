@@ -54,6 +54,8 @@ jobs:
           cat ${{ github.workspace }}/config/bbq20.keymap || echo "missing workspace keymap" && ls ${{ github.workspace }}/config || echo "workspace config directory missing"
           echo "--- ZMK pointing header ---"
           find . -name "pointing.h" 2>/dev/null
+          echo "workspace?"
+          find ${{ github.workspace }} -name "pointing.h" 2>/dev/null
           echo "--- West list ---"
           west list
 
