@@ -42,18 +42,21 @@ jobs:
           echo "Workspace: ${{ github.workspace }}"
           ls -la config/
           cat config/bbq20.keymap
-          echo "workspace keymap:"
-          cat ${{ github.workspace }}/config/bbq20.keymap || echo "no keymap found in workspace"
+          echo "--- ZMK pointing header ---"
+          find . -name "pointing.h" 2>/dev/null
+          echo "--- West list ---"
+          west list
 
-      - name: Debug config path
+      - name: Debug keymaps
         run: |
           find zmk -name "*.keymap" 2>/dev/null
           find zmk -name "bbq20*" 2>/dev/null
 
       - name: Build BBQ20 Firmware
         run: |
+          cd $PWD
           west build -s zmk/app -b bbq20 -- \
-            -DZMK_CONFIG=${{ github.workspace }}/config
+            -DZMK_CONFIG="$PWD/config"
 
       - name: Archive Firmware
         uses: actions/upload-artifact@v4
