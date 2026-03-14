@@ -42,6 +42,8 @@ jobs:
           echo "Workspace: ${{ github.workspace }}"
           ls -la config/
           cat config/bbq20.keymap
+          echo "workspace keymap:"
+          cat ${{ github.workspace }}/config/bbq20.keymap
 
       - name: Debug config path
         run: |
