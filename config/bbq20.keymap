@@ -1,7 +1,5 @@
 /*
- * Copyright (c) 2023 ZitaoTech
- *
- * SPDX-License-Identifier: MIT
+ * Customized by WisdomWolf
  */
 
 #include <dt-bindings/zmk/mouse.h>
