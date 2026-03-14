@@ -27,6 +27,11 @@ jobs:
       #       ${{ runner.os }}-build-
       #       ${{ runner.os }}-
 
+      - name: Fix workspace path
+        run: |
+          mkdir -p /home/runner/work/zmk_config_Q20
+          ln -s /__w/zmk_config_Q20/zmk_config_Q20 /home/runner/work/zmk_config_Q20/zmk_config_Q20
+
       - name: West Init
         run: west init -l config
 
@@ -35,11 +40,6 @@ jobs:
 
       - name: West Zephyr Export
         run: west zephyr-export
-
-      - name: Fix workspace path
-        run: |
-          mkdir -p /home/runner/work/zmk_config_Q20
-          ln -s /__w/zmk_config_Q20/zmk_config_Q20 /home/runner/work/zmk_config_Q20/zmk_config_Q20
 
       - name: Debug config path
         run: |
