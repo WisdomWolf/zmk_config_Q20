@@ -43,7 +43,7 @@ jobs:
           ls -la config/
           cat config/bbq20.keymap
           echo "workspace keymap:"
-          cat ${{ github.workspace }}/config/bbq20.keymap
+          cat ${{ github.workspace }}/config/bbq20.keymap || echo "no keymap found in workspace"
 
       - name: Debug config path
         run: |
