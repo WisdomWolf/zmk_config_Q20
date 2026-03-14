@@ -36,12 +36,19 @@ jobs:
       - name: West Zephyr Export
         run: west zephyr-export
 
+      - name: Fix workspace path
+        run: |
+          mkdir -p /home/runner/work/zmk_config_Q20
+          ln -s /__w/zmk_config_Q20/zmk_config_Q20 /home/runner/work/zmk_config_Q20/zmk_config_Q20
+
       - name: Debug config path
         run: |
           echo "PWD: $PWD"
           echo "Workspace: ${{ github.workspace }}"
           ls -la config/
           cat config/bbq20.keymap
+          echo "Workspace Keymap:"
+          cat ${{ github.workspace }}/config/bbq20.keymap || echo "missing workspace keymap" && ls ${{ github.workspace }}/config || echo "workspace config directory missing"
           echo "--- ZMK pointing header ---"
           find . -name "pointing.h" 2>/dev/null
           echo "--- West list ---"
@@ -54,9 +61,8 @@ jobs:
 
       - name: Build BBQ20 Firmware
         run: |
-          REAL_WORKSPACE=$(realpath $PWD)
           west build -s zmk/app -b bbq20 -- \
-            -DZMK_CONFIG="$REAL_WORKSPACE/config"
+            -DZMK_CONFIG="${{ github.workspace }}/config"
 
       - name: Archive Firmware
         uses: actions/upload-artifact@v4
