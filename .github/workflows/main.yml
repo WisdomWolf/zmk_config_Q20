@@ -43,10 +43,15 @@ jobs:
           ls -la config/
           cat config/bbq20.keymap
 
+      - name: Debug config path
+        run: |
+          find zmk -name "*.keymap" 2>/dev/null
+          find zmk -name "bbq20*" 2>/dev/null
+
       - name: Build BBQ20 Firmware
         run: |
           west build -s zmk/app -b bbq20 -- \
-            -DZMK_CONFIG=${PWD}/config
+            -DZMK_CONFIG=${{ github.workspace }}/config
 
       - name: Archive Firmware
         uses: actions/upload-artifact@v4
