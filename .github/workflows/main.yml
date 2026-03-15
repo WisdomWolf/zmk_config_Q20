@@ -74,8 +74,16 @@ jobs:
           west build -s zmk/app -b bbq20 -- \
             -DZMK_CONFIG="$PWD/config"
 
+      - name: Get short SHA
+        id: slug
+        run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Rename firmware
+        run: |
+          cp build/zephyr/zmk.uf2 "build/zephyr/bbq20_zmk_${{ steps.slug.outputs.sha }}.uf2"
+
       - name: Archive Firmware
         uses: actions/upload-artifact@v4
         with:
-          name: bbq20-zmk
-          path: build/zephyr/zmk.uf2
+          name: bbq20_zmk_${{ steps.slug.outputs.sha }}
+          path: "build/zephyr/bbq20_zmk_${{ steps.slug.outputs.sha }}.uf2"
