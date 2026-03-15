@@ -40,6 +40,10 @@ jobs:
         run: |
           sed -i '/#include <dt-bindings\/zmk\/pointing.h>/d' config/bbq20.keymap
 
+      - name: Show key positions
+        run: |
+          cat zmk/app/boards/arm/bbq20/bbq20.dts
+
       - name: Build BBQ20 Firmware
         run: |
           west build -s zmk/app -b bbq20 -- \
