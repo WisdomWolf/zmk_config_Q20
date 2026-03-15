@@ -56,7 +56,7 @@ jobs:
           echo "--- ZMK pointing header ---"
           find . -name "pointing.h" 2>/dev/null
           echo "workspace?"
-          find ${{ github.workspace }} -name "pointing.h" 2>/dev/null
+          find ${{ github.workspace }} -name "pointing.h" 2>/dev/null || echo "unable to run find on workspace"
           echo "--- West list ---"
           west list
 
