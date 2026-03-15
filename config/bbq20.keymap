@@ -13,6 +13,7 @@
 
 #define SYM 1
 #define UPPER 2
+#define NAV 3
 
 &sl { release-after-ms = <10000>; };
 
@@ -52,14 +53,25 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
-            bindings = <&sl 1>, <&tog 1>;
+            bindings = <&sl SYM>, <&tog SYM>;
         };
 
         td_upper: tap_dance_upper {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
-            bindings = <&sl 2>, <&tog 2>;
+            bindings = <&sl UPPER>, <&tog UPPER>;
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+
+        combo_upper {
+            timeout-ms = <50>;
+            //Q & P to toggle layer
+            key-positions = <7 16>;
+            bindings = <&tog NAV>;
         };
     };
 
@@ -92,9 +104,9 @@
             bindings = <
 &msc SCRL_UP  &msc SCRL_DOWN
 &bt BT_SEL 0  &bt BT_SEL 1     &td0        &bt BT_SEL 2  &bt BT_SEL 3
-&to 2         &kp UP           &bt BT_CLR  &sys_reset    &ext_power EP_TOG  &none                &kp LT      &kp GT      &kp PIPE     &kp KP_EQUAL
+&to NAV       &kp UP           &bt BT_CLR  &sys_reset    &ext_power EP_TOG  &none                &kp LT      &kp GT      &kp PIPE     &kp KP_EQUAL
 &kp LEFT      &kp DOWN         &kp RIGHT   &none         &kp BSLH           &kp AMPS             &kp LBRC    &kp RBRC    &kp CARET    &kp BSPC
-&tog 2        &mt TILDE GRAVE  &none       &none         &bl BL_DEC         &bl BL_TOG           &bl BL_INC  &none       &bootloader  &kp ENTER
+&tog UPPER    &mt TILDE GRAVE  &none       &none         &bl BL_DEC         &bl BL_TOG           &bl BL_INC  &none       &bootloader  &kp ENTER
                                &sk LSHIFT                &kp LALT           &hm OUT_TOG SPACE    &sl 1       &sk RSHIFT
             >;
         };
