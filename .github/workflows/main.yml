@@ -36,11 +36,15 @@ jobs:
       - name: Check west fetch
         run: |
           echo "--- zmk dir ---"
-          ls zmk/ 2>/dev/null || echo "zmk dir missing"
+          ls zmk/
           echo "--- zmk git log ---"
-          git -C zmk log --oneline -5 2>/dev/null || echo "not a git repo"
+          git -C zmk log --oneline -5
           echo "--- zmk remote ---"
-          git -C zmk remote -v 2>/dev/null || echo "no remotes"
+          git -C zmk remote -v
+          echo "--- pointing header search ---"
+          find zmk -name "pointing.h"
+          echo "--- zmk include dir ---"
+          ls zmk/app/include/dt-bindings/zmk/
 
       - name: West Zephyr Export
         run: west zephyr-export
