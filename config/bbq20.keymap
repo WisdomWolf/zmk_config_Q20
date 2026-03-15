@@ -24,9 +24,7 @@
             tapping-term-ms = <400>;
             bindings = <&mkp LCLK>, <&bt BT_CLR>;
         };
-    };
-
-    behaviors {
+  
         hm: homerow_mods {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -42,6 +40,13 @@
             #binding-cells = <2>;
             tapping-term-ms = <200>;
         };
+
+        td_caps: tap_dance_caps {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <300>;
+            bindings = <&caps_word>, <&kp CLCK>;
+        };
     };
 
     keymap {
@@ -50,7 +55,7 @@
         default_layer {
             bindings = <
 &mkp LCLK           &mkp RCLK
-&kp CLCK            &kp LGUI   &mkp LCLK   &mt ESC K_BACK  &kp TAB
+&td_caps            &kp LGUI   &mkp LCLK   &mt ESC K_BACK  &kp TAB
 &kp Q               &kp W      &kp E       &kp R           &kp T      &kp Y        &kp U    &kp I       &kp O     &kp P
 &kp A               &kp S      &kp D       &kp F           &kp G      &kp H        &kp J    &kp K       &kp L     &kp BSPC
 &ht_alt LEFT_ALT 2  &kp Z      &kp X       &kp C           &kp V      &kp B        &kp N    &kp M       &kp SEMI  &kp ENTER
