@@ -75,7 +75,9 @@ jobs:
             -DZMK_CONFIG="$PWD/config"
 
       - name: Get short SHA
-        run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        run: |
+          git config --global --add safe.directory /__w/zmk_config_Q20/zmk_config_Q20
+          echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Rename firmware
         run: |
