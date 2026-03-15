@@ -33,6 +33,15 @@ jobs:
       - name: West Update
         run: west update
 
+      - name: Check west fetch
+        run: |
+          echo "--- zmk dir ---"
+          ls zmk/ 2>/dev/null || echo "zmk dir missing"
+          echo "--- zmk git log ---"
+          git -C zmk log --oneline -5 2>/dev/null || echo "not a git repo"
+          echo "--- zmk remote ---"
+          git -C zmk remote -v 2>/dev/null || echo "no remotes"
+
       - name: West Zephyr Export
         run: west zephyr-export
 
