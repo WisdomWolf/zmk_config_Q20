@@ -52,15 +52,15 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
-            bindings = <&sl SYM>, <&tog SYM>;
+            bindings = <&sl 1>, <&tog 1>;
         };
 
         td_upper: tap_dance_upper {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
-            bindings = <&sl UPPER>, <&tog UPPER>;
-        }; 
+            bindings = <&sl 2>, <&tog 2>;
+        };
     };
 
     keymap {
@@ -84,7 +84,7 @@
 &kp HASH      &kp N1            &kp N2     &kp N3      &mt LBKT LPAR  &mt RBKT RPAR    &kp UNDER  &kp MINUS   &kp PLUS    &kp AT
 &kp STAR      &kp N4            &kp N5     &kp N6      &kp SLASH      &kp COLON        &kp SEMI   &kp APOS    &kp DQT     &kp DEL
 &sl 2         &kp N7            &kp N8     &kp N9      &kp QMARK      &kp EXCL         &kp COMMA  &kp DOT     &kp C_MUTE  &kp ENTER
-                                &to 1                  &kp N0         &kp SPACE        &tog SYM   &sk RSHIFT
+                                &to 1                  &kp N0         &kp SPACE        &tog 1     &sk RSHIFT
             >;
         };
 
@@ -95,7 +95,18 @@
 &to 2         &kp UP           &bt BT_CLR  &sys_reset    &ext_power EP_TOG  &none                &kp LT      &kp GT      &kp PIPE     &kp KP_EQUAL
 &kp LEFT      &kp DOWN         &kp RIGHT   &none         &kp BSLH           &kp AMPS             &kp LBRC    &kp RBRC    &kp CARET    &kp BSPC
 &tog 2        &mt TILDE GRAVE  &none       &none         &bl BL_DEC         &bl BL_TOG           &bl BL_INC  &none       &bootloader  &kp ENTER
-                               &sk LSHIFT                &kp LALT           &hm OUT_TOG SPACE    &sl SYM     &sk RSHIFT
+                               &sk LSHIFT                &kp LALT           &hm OUT_TOG SPACE    &sl 1       &sk RSHIFT
+            >;
+        };
+
+        nav_layer {
+            bindings = <
+&mkp LCLK  &mkp RCLK
+&mkp MB4   &mkp MCLK  &mkp LCLK  &mkp MCLK  &mkp MB5
+&trans     &kp UP     &none      &none      &none     &trans       &trans  &trans  &kp PG_UP  &trans
+&kp LEFT   &kp DOWN   &kp RIGHT  &trans     &trans    &trans       &trans  &trans  &kp PG_DN  &trans
+&to 0      &trans     &trans     &trans     &none     &none        &none   &trans  &none      &trans
+                      &trans                &trans    &kp SPACE    &trans  &trans
             >;
         };
     };
