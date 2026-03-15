@@ -33,41 +33,12 @@ jobs:
       - name: West Update
         run: west update
 
-      - name: Check west fetch
-        run: |
-          echo "--- zmk dir ---"
-          ls zmk/
-          echo "--- zmk git log ---"
-          git -C zmk log --oneline -5
-          echo "--- zmk remote ---"
-          git -C zmk remote -v
-          echo "--- pointing header search ---"
-          find zmk -name "pointing.h"
-          echo "--- zmk include dir ---"
-          ls zmk/app/include/dt-bindings/zmk/
-
       - name: West Zephyr Export
         run: west zephyr-export
 
-      - name: Debug config path
+      - name: Remove pointing.h include
         run: |
-          echo "PWD: $PWD"
-          echo "Workspace: ${{ github.workspace }}"
-          ls -la config/
-          cat config/bbq20.keymap
-          echo "Workspace Keymap:"
-          cat ${{ github.workspace }}/config/bbq20.keymap || echo "missing workspace keymap" && ls ${{ github.workspace }}/config || echo "workspace config directory missing"
-          echo "--- ZMK pointing header ---"
-          find . -name "pointing.h" 2>/dev/null
-          echo "workspace?"
-          find ${{ github.workspace }} -name "pointing.h" 2>/dev/null || echo "unable to run find on workspace"
-          echo "--- West list ---"
-          west list
-
-      - name: Debug keymaps
-        run: |
-          find zmk -name "*.keymap" 2>/dev/null
-          find zmk -name "bbq20*" 2>/dev/null
+          sed -i '/#include <dt-bindings\/zmk\/pointing.h>/d' config/bbq20.keymap
 
       - name: Build BBQ20 Firmware
         run: |
